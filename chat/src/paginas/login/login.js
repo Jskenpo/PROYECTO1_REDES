@@ -5,9 +5,7 @@ import LoginCard from "../../componentes/LoginCard/LoginCard";
 function Login() {
     return (
     <div className="login">
-        <div className="login__container">
-            <LoginCard/>
-        </div>
+        <LoginCard />
     </div>
     );
     }

@@ -1,0 +1,19 @@
+#X{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    bottom: 3px;
+    right: 6px;
+    
+}
+
+#RegisterHeader{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Helvetica';
+    font-size: 20px;
+    font-weight: bold;
+}
