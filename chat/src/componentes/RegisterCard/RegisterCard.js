@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import X from '../../imas/X.png';
+import CloseButton from 'react-bootstrap/CloseButton';
 import React from 'react';
 import './RegisterCard.css';
 import { useNavigate } from "react-router-dom";
@@ -26,9 +26,8 @@ function RegisterCard() {
             <Card.Header>
                 <div id='RegisterHeader'>
                     <Card.Title>Registro</Card.Title>
-                    <Button variant="outline-danger" size="sm" style= {{width: '25px',height: '25px'}} onClick={handleBack}>
-                        <img src={X} alt="X" id="X"  />
-                    </Button>
+                    <CloseButton  size="sm" style= {{width: '25px',height: '25px'}} onClick={handleBack}>
+                    </CloseButton>
                 </div>
                 
             </Card.Header>

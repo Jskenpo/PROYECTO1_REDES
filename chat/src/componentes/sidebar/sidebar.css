@@ -1,0 +1,10 @@
+#sidebar{
+    width : 5%;
+    height : 100vh;
+    background-color : #e6f5f8;
+    top : 0;
+    left : 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
