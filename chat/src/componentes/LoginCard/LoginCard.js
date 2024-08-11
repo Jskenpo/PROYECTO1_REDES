@@ -30,6 +30,7 @@ function LoginCard() {
 
     xmppClient.on('error', err => {
       console.error('❌', err.toString());
+      alert ('Correo o contraseña incorrectos');
     });
 
     xmppClient.on('online', address => {
