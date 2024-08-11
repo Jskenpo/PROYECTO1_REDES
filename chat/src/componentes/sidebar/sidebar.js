@@ -1,20 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from '@mdi/react';
 import Button from 'react-bootstrap/esm/Button';
 import { mdiMessagePlusOutline, mdiCog, mdiContacts, mdiLogout } from '@mdi/js';
 import { useNavigate } from 'react-router-dom';
-import { client } from '@xmpp/client';
+import { client, xml } from '@xmpp/client';
 import './sidebar.css';
 import SettingsDialog from '../SettingsDialog/SettingsDialog';
 
 function Sidebar() {
     const [openSettings, setOpenSettings] = useState(false);
+    const [xmppClient, setXmppClient] = useState(null);
     const navigate = useNavigate();
     
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        const password = localStorage.getItem('password');
+
+        if (user && password) {
+            const xmpp = client({
+                service: 'ws://alumchat.lol:7070/ws/',
+                domain: 'alumchat.lol',
+                username: user,
+                password: password,
+            });
+
+            xmpp.on('error', err => {
+                console.error('❌ Error:', err.toString());
+            });
+
+            xmpp.on('online', address => {
+                console.log('🟢 Conectado como', address.toString());
+                // Ahora el usuario está conectado, se puede enviar la presencia
+                const presence = xml('presence', {}, xml('show', {}, 'chat'), xml('status', {}, 'Disponible'));
+                xmpp.send(presence);
+            });
+
+            xmpp.start().catch(err => {
+                console.error('❌ Error al iniciar XMPP:', err.toString());
+            });
+
+            setXmppClient(xmpp);
+        }
+    }, []);
+
     const handleLogout = () => {
-        const xmppClient = client();
-        xmppClient.stop();
-        console.log('🔴', 'offline');
+        if (xmppClient) {
+            xmppClient.stop();
+            console.log('🔴 Desconectado');
+        }
         navigate('/', { replace: true });
         localStorage.removeItem('user');
         localStorage.removeItem('password');
@@ -44,7 +77,7 @@ function Sidebar() {
             </Button>
             
             {/* Renderiza el SettingsDialog aquí */}
-            <SettingsDialog open={openSettings} handleClose={handleCloseSettings} />
+            <SettingsDialog open={openSettings} handleClose={handleCloseSettings} xmppClient={xmppClient} />
         </div>
     );
 }
