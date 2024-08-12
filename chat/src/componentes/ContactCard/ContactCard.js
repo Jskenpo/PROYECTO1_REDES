@@ -11,7 +11,7 @@ function ContactCard({ contact }) {
                 <Icon path={mdiAccount} size={1} color='#000000' />
                 <Card.Title>{contact.name}</Card.Title>
                 <Card.Text>
-                    {contact.jid}
+                    {contact.status}
                 </Card.Text>
             </Card.Body>
         </Card>
