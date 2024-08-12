@@ -9,9 +9,9 @@ function ContactCard({ contact }) {
         <Card id="contactCard">
             <Card.Body>
                 <Icon path={mdiAccount} size={1} color='#000000' />
-                <Card.Title>{contact.jid.local}</Card.Title>
+                <Card.Title>{contact.name}</Card.Title>
                 <Card.Text>
-                    {contact.jid.domain}
+                    {contact.jid}
                 </Card.Text>
             </Card.Body>
         </Card>
