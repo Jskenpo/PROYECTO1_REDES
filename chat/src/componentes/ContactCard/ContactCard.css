@@ -1,0 +1,7 @@
+#contactCard {
+    width: 90%;
+    position : flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0 auto;
+}

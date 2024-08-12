@@ -1,0 +1,13 @@
+#contactsContainer{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    height: 91vh;
+    overflow-y: auto;
+    background-color: #f8f8f8;
+    border-right: 1px solid #e0e0e0;
+    position: absolute;
+    left: 5%;
+    top: 9%;
+    gap : 1%;
+}
