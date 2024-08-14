@@ -9,7 +9,7 @@ function ContactsContainer({ xmppClient, filteredContacts }) {
     useEffect(() => {
         if (xmppClient) {
             xmppClient.on('stanza', (stanza) => {
-                console.log('🔄 Stanza recibida:', stanza.toString());
+                console.log('🔄 Stanza recibida de contactos:', stanza.toString());
 
                 if (stanza.is('iq') && stanza.attrs.id === 'getRoster1' && stanza.attrs.type === 'result') {
                     const query = stanza.getChild('query', 'jabber:iq:roster');
