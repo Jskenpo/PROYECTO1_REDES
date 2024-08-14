@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '@mdi/react';
 import Button from 'react-bootstrap/esm/Button';
-import { mdiMessagePlusOutline, mdiCog, mdiContacts, mdiLogout } from '@mdi/js';
+import { mdiMessagePlusOutline, mdiCog, mdiBellBadgeOutline , mdiLogout } from '@mdi/js';
 import { useNavigate } from 'react-router-dom';
 import './sidebar.css';
 import SettingsDialog from '../SettingsDialog/SettingsDialog';
@@ -61,7 +61,7 @@ function Sidebar({ xmppClient }) {
                 <Icon path={mdiMessagePlusOutline} size={1} color='#000000' />
             </Button>
             <Button style={{ backgroundColor: "transparent", border: "none" }} >
-                <Icon path={mdiContacts} size={1} color='#000000' />
+                <Icon path={mdiBellBadgeOutline } size={1} color='#000000' />
             </Button>
             <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleOpenSettings}>
                 <Icon path={mdiCog} size={1} color='#000000'/>
