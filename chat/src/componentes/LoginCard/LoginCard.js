@@ -15,11 +15,15 @@ function LoginCard() {
     navigate('/register', { replace: true });
   }
 
+
+
   const handleLogin = async () => {
     if (!email || !password) {
       alert("Por favor, ingresa tu correo electrónico y contraseña.");
       return;
     }
+
+
 
     const xmppClient = client({
       service: 'ws://alumchat.lol:7070/ws/',
@@ -30,7 +34,7 @@ function LoginCard() {
 
     xmppClient.on('error', err => {
       console.error('❌', err.toString());
-      alert ('Correo o contraseña incorrectos');
+      alert('Correo o contraseña incorrectos');
     });
 
     xmppClient.on('online', address => {
@@ -41,10 +45,19 @@ function LoginCard() {
     });
 
     try {
+
+      
+
+      
       await xmppClient.start();
+
+
+
     } catch (err) {
       console.error('❌', err.toString());
     }
+
+
   };
 
   return (
@@ -53,14 +66,14 @@ function LoginCard() {
         <img src={Logo} alt="Logo" id="Logo" />
         <h1 id='LoginTitulo'>XMPP Client Chat</h1>
       </div>
-      
+
       <div id='DivFormLogin'>
         <Form>
           <h2>Bienvenido a AlumChat.lol</h2>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Correo Electrónico</Form.Label>
-            <Form.Control 
-              type="email" 
+            <Form.Control
+              type="email"
               placeholder="Ingresa tu correo electrónico"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -69,8 +82,8 @@ function LoginCard() {
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Contraseña</Form.Label>
-            <Form.Control 
-              type="password" 
+            <Form.Control
+              type="password"
               placeholder="Contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -87,7 +100,7 @@ function LoginCard() {
             </Button>
           </div>
         </Form>
-      </div> 
+      </div>
     </div>
   );
 }

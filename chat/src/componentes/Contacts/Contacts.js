@@ -21,8 +21,7 @@ function Contacts({ xmppClient }) {
                 if (query) {
                     const contactsList = query.getChildren('item').map(item => ({
                         name: item.attrs.name || item.attrs.jid.split('@')[0],
-                        jid: item.attrs.jid,
-                        status: 'Offline'
+                        jid: item.attrs.jid
                     }));
 
                     const filtered = contactsList.filter(contact => 

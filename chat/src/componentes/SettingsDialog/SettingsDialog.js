@@ -35,7 +35,7 @@ function SettingsDialog({ open, handleClose, xmppClient }) {
                 xmppValue = 'away';
                 break;
             case 'no disponible':
-                xmppValue = 'xa';
+                xmppValue = 'offline';
                 break;
             case 'ocupado':
                 xmppValue = 'dnd';

@@ -3,7 +3,7 @@ import './ContactsContainer.css';
 import ContactCard from '../ContactCard/ContactCard';
 import { xml } from '@xmpp/client';
 
-function ContactsContainer({ xmppClient,filteredContacts }) {
+function ContactsContainer({ xmppClient, filteredContacts }) {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
@@ -20,8 +20,9 @@ function ContactsContainer({ xmppClient,filteredContacts }) {
 
                     const contactsList = query.getChildren('item').map(item => ({
                         name: item.attrs.name || item.attrs.jid.split('@')[0],
-                        jid: item.attrs.jid,
-                        status: 'Offline'
+                        jid: item.attrs.jid.split('/')[0],  // Asegúrate de que solo el JID base se use
+                        status: 'Offline',  // Valor predeterminado hasta recibir la presencia
+                        customStatus: ''
                     }));
 
                     console.log('Contacts:', contactsList);
@@ -30,7 +31,7 @@ function ContactsContainer({ xmppClient,filteredContacts }) {
 
                 // Manejar la presencia de los contactos
                 if (stanza.is('presence')) {
-                    const from = stanza.attrs.from;
+                    const from = stanza.attrs.from.split('/')[0];  // Quita el recurso si está presente
                     const show = stanza.getChildText('show') || 'chat';
                     const status = stanza.getChildText('status') || '';
 
