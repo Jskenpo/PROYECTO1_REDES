@@ -1,0 +1,7 @@
+#requestCard {
+    width: 100%;
+    position : flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0 auto;
+}

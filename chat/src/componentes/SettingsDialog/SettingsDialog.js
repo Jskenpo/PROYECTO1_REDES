@@ -89,6 +89,7 @@ function SettingsDialog({ open, handleClose, xmppClient }) {
                 await xmppClient.send(presence);
                 console.log(`Estado actualizado a ${disponibilidad} con mensaje: ${estado}`);
                 setMensajeConexion(`Estado actualizado a ${disponibilidad} con mensaje: ${estado}`);
+                handleClose();
             } catch (err) {
                 console.error('❌ Error al enviar la presencia:', err);
                 setMensajeConexion(`❌ Error al enviar la presencia: ${err.message}`);

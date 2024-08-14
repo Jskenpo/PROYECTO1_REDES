@@ -7,10 +7,12 @@ import './sidebar.css';
 import SettingsDialog from '../SettingsDialog/SettingsDialog';
 import { xml } from '@xmpp/client';
 import NewContact from '../NewContact/NewContact';
+import NotificationsDialog from '../NotificationsDialog/NotificationsDialog';
 
 function Sidebar({ xmppClient }) {
     const [openSettings, setOpenSettings] = useState(false);
     const [openContacts, setOpenContacts] = useState(false);
+    const [openNotifications, setOpenNotifications] = useState(false);
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -54,13 +56,21 @@ function Sidebar({ xmppClient }) {
     const handleCloseContacts = () => {
         setOpenContacts(false);
     }
-    
+
+    const handleOpenNotifications = () => {
+        setOpenNotifications(true);
+    }
+
+    const handleCloseNotifications = () => {
+        setOpenNotifications(false);
+    }
+
     return (
         <div id="sidebar">
             <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleOpenContacts} >
                 <Icon path={mdiMessagePlusOutline} size={1} color='#000000' />
             </Button>
-            <Button style={{ backgroundColor: "transparent", border: "none" }} >
+            <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleOpenNotifications} >
                 <Icon path={mdiBellBadgeOutline } size={1} color='#000000' />
             </Button>
             <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleOpenSettings}>
@@ -75,6 +85,10 @@ function Sidebar({ xmppClient }) {
 
             {/* Renderiza el ContactsDialog aquí */}
             <NewContact open={openContacts} handleClose={handleCloseContacts} xmppClient={xmppClient} />
+
+            {/* Renderiza el NotificationsDialog aquí */}
+            <NotificationsDialog open={openNotifications} handleClose={handleCloseNotifications} xmppClient={xmppClient} />
+            
         </div>
     );
 }
