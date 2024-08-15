@@ -10,16 +10,31 @@ import ContactInfo from '../ContactInfo/ContactInfo';
 
 
 function ContactCard({ contact }) {
-
     const [openInfo, setOpenInfo] = useState(false);
-
+    
     const handleOpenInfo = () => {
         setOpenInfo(true);
-    }
+    };
 
     const handleCloseInfo = () => {
         setOpenInfo(false);
-    }
+    };
+
+    // Función para traducir el estado del contacto al español
+    const traducirEstado = (status) => {
+        switch (status) {
+            case 'chat':
+                return 'Disponible';
+            case 'away':
+                return 'Ausente';
+            case 'xa':
+                return 'No Disponible';
+            case 'dnd':
+                return 'Ocupado';
+            default:
+                return 'Offline';
+        }
+    };
 
     return (
         <div id="contactCard">
@@ -33,14 +48,12 @@ function ContactCard({ contact }) {
                         </Button>
                     </div>
                     <Card.Text>
-                        {contact.status || 'Offline'}
+                        {traducirEstado(contact.status)} {/* Mostrar la disponibilidad en español */}
                     </Card.Text>
                 </Card.Body>
             </Card>
 
             <ContactInfo handleOpen={openInfo} handleClose={handleCloseInfo} contact={contact} />
-
-
         </div>
     );
 }
