@@ -5,3 +5,8 @@
     justify-content: space-around;
     margin: 0 auto;
 }
+#contactCardOptions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
