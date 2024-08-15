@@ -9,8 +9,11 @@ import ContactsContainer from '../ContactContainer/ContactsContainer';
 import { xml } from '@xmpp/client';
 import { mdiRefresh } from "@mdi/js";
 import Icon from "@mdi/react";
+import { useXmppContext } from '../../paginas/context/XmppContext';
 
-function Contacts({ xmppClient }) {
+
+function Contacts() {
+    const { xmppClient } = useXmppContext();  // Usa el contexto para obtener el cliente XMPP
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredContacts, setFilteredContacts] = useState([]);
 
@@ -46,7 +49,7 @@ function Contacts({ xmppClient }) {
     return (
         <div id="contacts">
             <div id="contactsHeader">
-                <Navbar className="bg-body-tertiary justify-content-center" >
+                <Navbar className="bg-body-tertiary justify-content-center">
                     <Form inline>
                         <Row>
                             <Col lg="auto">
@@ -63,17 +66,17 @@ function Contacts({ xmppClient }) {
                                 <Button variant="outline-info" onClick={handleSearch}>Buscar</Button>
                             </Col>
                             <Col xs="auto">
-                                <Button variant="outline-info"  onClick={() => setFilteredContacts([])}>
+                                <Button variant="outline-info" onClick={() => setFilteredContacts([])}>
                                     <Icon path={mdiRefresh} size={1} color="#000000" />
                                 </Button>
                             </Col>
-
                         </Row>
                     </Form>
                 </Navbar>
             </div>
 
-            <ContactsContainer xmppClient={xmppClient} filteredContacts={filteredContacts} />
+            {/* No necesitas pasar xmppClient como prop, ya que ContactsContainer también usará el contexto */}
+            <ContactsContainer filteredContacts={filteredContacts} />
         </div>
     );
 }

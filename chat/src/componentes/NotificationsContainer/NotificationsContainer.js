@@ -1,28 +1,12 @@
-import React, { useState, useEffect } from 'react';
+// NotificationsContainer.js
+import React from 'react';
 import './NotificationsContainer.css';
 import RequestCard from '../RequestCard/RequestCard';
 import { xml } from '@xmpp/client';
+import { useXmppContext } from '../../paginas/context/XmppContext';  // Importa el contexto
 
-function NotificationsContainer({ xmppClient }) {
-    const [subscriptionRequests, setSubscriptionRequests] = useState([]);
-
-    useEffect(() => {
-        if (!xmppClient) return;
-
-        xmppClient.on('stanza', (stanza) => {
-            console.log('🔄 Stanza recibida de notificaciones:', stanza.toString());
-
-            if (stanza.is('presence') && stanza.attrs.type === 'subscribe') {
-                const from = stanza.attrs.from;
-                const message = stanza.getChildText('status') || 'Solicitud de suscripción';
-
-                setSubscriptionRequests(prevRequests => [
-                    ...prevRequests,
-                    { from, message }
-                ]);
-            }
-        });
-    }, [xmppClient]);
+function NotificationsContainer() {
+    const { xmppClient,subscriptionRequests } = useXmppContext();
 
     const handleAccept = (from) => {
         const acceptPresence = xml('presence', { to: from, type: 'subscribed' });
@@ -37,7 +21,7 @@ function NotificationsContainer({ xmppClient }) {
     };
 
     return (
-        <div id='NotificationsContainer'>
+        <div id="NotificationsContainer">
             {subscriptionRequests.length === 0 ? (
                 <p>No hay notificaciones de suscripción.</p>
             ) : (

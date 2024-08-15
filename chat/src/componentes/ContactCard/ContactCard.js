@@ -5,13 +5,14 @@ import { mdiAccount } from '@mdi/js';
 import './ContactCard.css';
 
 function ContactCard({ contact }) {
+
     return (
         <Card id="contactCard">
             <Card.Body>
                 <Icon path={mdiAccount} size={1} color='#000000' />
                 <Card.Title>{contact.name}</Card.Title>
                 <Card.Text>
-                    {contact.status}
+                    {contact.status || 'Offline'}
                 </Card.Text>
             </Card.Body>
         </Card>

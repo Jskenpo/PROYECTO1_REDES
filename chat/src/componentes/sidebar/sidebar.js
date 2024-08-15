@@ -8,8 +8,10 @@ import SettingsDialog from '../SettingsDialog/SettingsDialog';
 import { xml } from '@xmpp/client';
 import NewContact from '../NewContact/NewContact';
 import NotificationsDialog from '../NotificationsDialog/NotificationsDialog';
+import {useXmppContext} from '../../paginas/context/XmppContext';
 
-function Sidebar({ xmppClient }) {
+function Sidebar( ) {
+    const {xmppClient} = useXmppContext();
     const [openSettings, setOpenSettings] = useState(false);
     const [openContacts, setOpenContacts] = useState(false);
     const [openNotifications, setOpenNotifications] = useState(false);

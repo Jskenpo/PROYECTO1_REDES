@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import NotificationsContainer from '../NotificationsContainer/NotificationsContainer';
 
-function NotificationsDialog({ open, handleClose, xmppClient }) {
+function NotificationsDialog({ open, handleClose }) {
     return (
         <div id='NotificationsDialog'>
             <Dialog
@@ -18,7 +18,7 @@ function NotificationsDialog({ open, handleClose, xmppClient }) {
             >
                 <DialogTitle>Notificaciones</DialogTitle>
                 <DialogContent>
-                    <NotificationsContainer xmppClient={xmppClient} />
+                    <NotificationsContainer/>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cerrar</Button>
