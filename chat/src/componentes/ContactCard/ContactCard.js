@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Icon from '@mdi/react';
-import { mdiAccount } from '@mdi/js';
-import './ContactCard.css';
-import { mdiDotsVertical } from '@mdi/js';
+import { mdiAccount, mdiDotsVertical, mdiMessageText } from '@mdi/js';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import './ContactCard.css';
 import ContactInfo from '../ContactInfo/ContactInfo';
-
+import ChatContainer from '../ChatContainer/ChatContainer';
 
 function ContactCard({ contact }) {
     const [openInfo, setOpenInfo] = useState(false);
-    
+    const [openChat, setOpenChat] = useState(false); // Estado para controlar la visibilidad del ChatContainer
+
     const handleOpenInfo = () => {
         setOpenInfo(true);
     };
@@ -20,7 +19,14 @@ function ContactCard({ contact }) {
         setOpenInfo(false);
     };
 
-    // Función para traducir el estado del contacto al español
+    const handleOpenChat = () => {
+        setOpenChat(true); // Abre el chat
+    };
+
+    const handleCloseChat = () => {
+        setOpenChat(false); // Cierra el chat
+    };
+
     const traducirEstado = (status) => {
         switch (status) {
             case 'chat':
@@ -40,20 +46,35 @@ function ContactCard({ contact }) {
         <div id="contactCard">
             <Card id="contactCard">
                 <Card.Body>
-                    <Icon path={mdiAccount} size={1} color='#000000' />
                     <div id="contactCardOptions">
-                        <Card.Title>{contact.name}</Card.Title>
+                        <Icon path={mdiAccount} size={1} color='#000000' />
                         <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleOpenInfo}>
                             <Icon path={mdiDotsVertical} size={1} color='#000000' />
                         </Button>
                     </div>
+                    <div id="contactCardOptions">
+                        <Card.Title>{contact.name}</Card.Title>
+                        <Button 
+                            style={{ backgroundColor: "transparent", border: "none" }} 
+                            onClick={handleOpenChat} // Maneja el clic para abrir el chat
+                        >
+                            <Icon path={mdiMessageText} size={1} color='#000000' />
+                        </Button>
+                    </div>
                     <Card.Text>
-                        {traducirEstado(contact.status)} {/* Mostrar la disponibilidad en español */}
+                        {traducirEstado(contact.status)}
                     </Card.Text>
                 </Card.Body>
             </Card>
 
             <ContactInfo handleOpen={openInfo} handleClose={handleCloseInfo} contact={contact} />
+
+            {openChat && ( // Condicionalmente renderiza ChatContainer
+                <ChatContainer 
+                    userChat={contact.name} 
+                    handleCloseChat={handleCloseChat} // Pasar función para cerrar chat
+                />
+            )}
         </div>
     );
 }
