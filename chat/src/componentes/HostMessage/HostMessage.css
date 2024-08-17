@@ -1,0 +1,23 @@
+#hostMessage {
+    position: relative;
+    width: 100%;
+    max-height: auto;
+    z-index: 0;
+    padding: 5%;
+}
+
+#messageHContainer {
+    position: relative;
+    font-family: sans-serif;
+    margin-right: 0;
+    font-size: 18px;
+    line-height: 24px;
+    max-width: 80%; /* Ajusta el ancho hasta el 80% */
+    background: #fff;
+    border: 3px solid #8acce5;
+    border-radius: 40px;
+    padding: 24px;
+    text-align: center;
+    color: #000;
+    box-sizing: border-box; /* Incluye el padding y el border en el ancho total */
+}
