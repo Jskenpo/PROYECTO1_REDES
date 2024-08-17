@@ -111,6 +111,9 @@ export const XmppProvider = ({ xmppClient, children }) => {
                 xml('body', {}, body)
             );
             await xmppClient.send(message);
+
+            // Agrega el mensaje al estado local
+            setMessages(prevMessages => [...prevMessages, { name: 'Tú', message: body }]);
         } catch (err) {
             console.error('❌ Error al enviar el mensaje:', err.toString());
         }
