@@ -1,23 +1,24 @@
 // XmppContext.js
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { xml } from '@xmpp/client';
+
 const XmppContext = createContext();
 
 export const XmppProvider = ({ xmppClient, children }) => {
     const [subscriptionRequests, setSubscriptionRequests] = useState([]);
     const [contacts, setContacts] = useState([]);
-    const [messages, setMessages] = useState([]); // Estado para almacenar mensajes
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         if (!xmppClient) return;
 
         xmppClient.on('stanza', (stanza) => {
+            console.log('🔄 Stanza recibida:', stanza.toString());
 
             // Manejar las stanzas de presencia para suscripciones
             if (stanza.is('presence') && stanza.attrs.type === 'subscribe') {
                 const from = stanza.attrs.from;
                 const message = stanza.getChildText('status') || 'Solicitud de suscripción';
-
                 setSubscriptionRequests(prevRequests => [
                     ...prevRequests,
                     { from, message }
@@ -37,8 +38,6 @@ export const XmppProvider = ({ xmppClient, children }) => {
                 }));
 
                 setContacts(contactsList);
-
-                // Agrega este log para verificar los contactos
                 console.log('Contactos recibidos:', contactsList);
             }
 
@@ -53,11 +52,10 @@ export const XmppProvider = ({ xmppClient, children }) => {
                         contact.jid === from ? { ...contact, status: show, customStatus: status } : contact
                     )
                 );
-
-                // Agrega este log para verificar la actualización de presencia
                 console.log('Presencia actualizada:', from, show, status);
             }
-            // Manejar la presencia de los contactos
+
+            // Manejar mensajes
             if (stanza.is('message')) {
                 console.log('📩 Stanza de tipo mensaje recibida');
                 
@@ -68,7 +66,7 @@ export const XmppProvider = ({ xmppClient, children }) => {
 
                     if (body) {
                         const message = {
-                            name: from.split('@')[0], // Usa la parte del JID antes de la barra como nombre
+                            name: from.split('@')[0],
                             message: body
                         };
 
@@ -104,8 +102,22 @@ export const XmppProvider = ({ xmppClient, children }) => {
         });
     }, [xmppClient]);
 
+    // Función para enviar mensajes
+    const sendMessage = async (to, body) => {
+        try {
+            const message = xml(
+                'message',
+                { type: 'chat', to: `${to}@alumchat.lol` },
+                xml('body', {}, body)
+            );
+            await xmppClient.send(message);
+        } catch (err) {
+            console.error('❌ Error al enviar el mensaje:', err.toString());
+        }
+    };
+
     return (
-        <XmppContext.Provider value={{ xmppClient, subscriptionRequests, contacts,messages  }}>
+        <XmppContext.Provider value={{ xmppClient, subscriptionRequests, contacts, messages, sendMessage }}>
             {children}
         </XmppContext.Provider>
     );
