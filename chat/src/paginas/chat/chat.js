@@ -5,6 +5,8 @@ import Sidebar from '../../componentes/sidebar/sidebar';
 import Contacts from '../../componentes/Contacts/Contacts';
 import { client, xml } from '@xmpp/client';
 import { XmppProvider } from '../context/XmppContext';  // Importa el contexto
+import Icon from '@mdi/react';
+import { mdiMessageText } from '@mdi/js';
 
 function Chat() {
     const [xmppClient, setXmppClient] = useState(null);
@@ -44,6 +46,18 @@ function Chat() {
             <div id="chat">
                 <Sidebar />
                 <Contacts />
+
+                <div id="placeHolder">
+                    <div id="placeHolderHeader">
+                        <Icon path={mdiMessageText} size={3} color='#000000' />
+                    </div>
+
+                    <div id='placeHolderContent'>
+                        <h3>Selecciona un contacto para chatear</h3>
+                    </div>
+
+                </div>
+
             </div>
         </XmppProvider>
     );
