@@ -7,22 +7,17 @@ import { mdiPaperclip, mdiSend } from '@mdi/js';
 import Button from 'react-bootstrap/Button';
 import ContactMessage from '../ContactMessage/ContactMessage';
 import HostMessage from '../HostMessage/HostMessage';
+import { useXmppContext } from '../../paginas/context/XmppContext'; // Importa el contexto
 
 function ChatContainer({ userChat, handleCloseChat }) {
+    const { messages } = useXmppContext(); // Obtén los mensajes del contexto
     const chatMessagesRef = useRef(null);
-
-    // Ejemplo de mensajes
-    const messages = [
-        { name: userChat, message: 'Holaaaaaa aaaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaa, ¿cómo estás?' },
-        { name: 'Tú', message: 'Bien muchas gracias, y tu ¿cómo estás?' },
-        { name: userChat, message: 'Aqui trabajando redes :((((((' }
-    ];
 
     useEffect(() => {
         if (chatMessagesRef.current) {
             chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
         }
-    }, [messages]); // Asegúrate de incluir todos los datos que pueden cambiar y afectar el scroll
+    }, [messages]); // Ajusta el scroll cuando los mensajes cambian
 
     return (
         <div id="chatContainer">
