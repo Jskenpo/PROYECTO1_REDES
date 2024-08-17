@@ -27,9 +27,11 @@ function ChatContainer({ userChat, handleCloseChat }) {
         }
     };
 
+    const username = localStorage.getItem('user');
+
     // Filtra los mensajes para mostrar solo los que pertenecen al chat actual
     const filteredMessages = messages.filter(msg =>
-        msg.name === userChat || msg.name === 'Tú'
+        msg.host === username && msg.contact === userChat
     );
 
     return (
@@ -41,7 +43,7 @@ function ChatContainer({ userChat, handleCloseChat }) {
 
             <div id="chatMessages" ref={chatMessagesRef}>
                 {filteredMessages.map((msg, index) => 
-                    msg.name === userChat ? 
+                    msg.emisor === userChat ? 
                         <ContactMessage key={index} message={msg} /> : 
                         <HostMessage key={index} message={msg} />
                 )}

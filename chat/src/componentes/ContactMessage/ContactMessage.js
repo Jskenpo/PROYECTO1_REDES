@@ -5,7 +5,7 @@ function ContactMessage({ message }) {
     return (
         <div id="contactMessage">
             <div id="messageContainer">
-                    <h6>{message.name}</h6>
+                    <h6>{message.contact}</h6>
                     <p>{message.message}</p>
             </div>
         </div>

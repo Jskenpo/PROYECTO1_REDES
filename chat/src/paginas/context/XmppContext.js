@@ -63,10 +63,13 @@ export const XmppProvider = ({ xmppClient, children }) => {
                     const from = stanza.attrs.from;
                     const body = stanza.getChildText('body');
                     const omemoEvent = stanza.getChild('event', 'http://jabber.org/protocol/pubsub#event');
+                    const username = localStorage.getItem('user');
 
                     if (body) {
                         const message = {
-                            name: from.split('@')[0],
+                            host: username,
+                            contact: from.split('@')[0],
+                            emisor: from.split('@')[0],
                             message: body
                         };
 
@@ -105,6 +108,7 @@ export const XmppProvider = ({ xmppClient, children }) => {
     // Función para enviar mensajes
     const sendMessage = async (to, body) => {
         try {
+            
             const message = xml(
                 'message',
                 { type: 'chat', to: `${to}@alumchat.lol` },
@@ -112,8 +116,10 @@ export const XmppProvider = ({ xmppClient, children }) => {
             );
             await xmppClient.send(message);
 
+            const username = localStorage.getItem('user');
+
             // Agrega el mensaje al estado local
-            setMessages(prevMessages => [...prevMessages, { name: 'Tú', message: body }]);
+            setMessages(prevMessages => [...prevMessages, { host: username, contact: to, emisor:username, message: body }]);
         } catch (err) {
             console.error('❌ Error al enviar el mensaje:', err.toString());
         }
