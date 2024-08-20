@@ -1,5 +1,6 @@
 // XmppContext.js
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react'; 
+import noti from '../../imas/noti.mp3'
 import { xml } from '@xmpp/client';
 
 const XmppContext = createContext();
@@ -80,7 +81,8 @@ export const XmppProvider = ({ xmppClient, children }) => {
                         setMessages(prevMessages => [...prevMessages, message]);
                         // Generar una alerta para un nuevo mensaje
                         setAlerts(prevAlerts => [...prevAlerts, { user: from.split('@')[0], message: body }]);
-
+                        const audio = new Audio(noti);
+                        audio.play();
                         console.log('🟢 Mensaje de chat recibido:', body);
                         console.log('De:', from);
                         console.log('Cuerpo del mensaje:', body);
@@ -135,8 +137,12 @@ export const XmppProvider = ({ xmppClient, children }) => {
         setAlerts(prevAlerts => prevAlerts.filter((_, i) => i !== index));
     };
 
+    const removeSubscriptionRequest = (from) => {
+        setSubscriptionRequests(prevRequests => prevRequests.filter(request => request.from !== from));
+    };
+
     return (
-        <XmppContext.Provider value={{ xmppClient, subscriptionRequests, contacts, messages, sendMessage, alerts, removeAlert }}>
+        <XmppContext.Provider value={{ xmppClient, subscriptionRequests, contacts, messages, sendMessage, alerts, removeAlert, removeSubscriptionRequest }}>
             {children}
         </XmppContext.Provider>
     );
