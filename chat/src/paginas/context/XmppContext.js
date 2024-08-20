@@ -8,6 +8,7 @@ export const XmppProvider = ({ xmppClient, children }) => {
     const [subscriptionRequests, setSubscriptionRequests] = useState([]);
     const [contacts, setContacts] = useState([]);
     const [messages, setMessages] = useState([]);
+    const [alerts, setAlerts] = useState([]); // Nuevo estado para alertas
 
     useEffect(() => {
         if (!xmppClient) return;
@@ -19,10 +20,13 @@ export const XmppProvider = ({ xmppClient, children }) => {
             if (stanza.is('presence') && stanza.attrs.type === 'subscribe') {
                 const from = stanza.attrs.from;
                 const message = stanza.getChildText('status') || 'Solicitud de suscripción';
-                setSubscriptionRequests(prevRequests => [
-                    ...prevRequests,
-                    { from, message }
-                ]);
+                setSubscriptionRequests(prevNotifications => {
+                    const alreadyExists = prevNotifications.some(notification => notification.from === from);
+                    if (!alreadyExists) {
+                        return [...prevNotifications, { from, message }];
+                    }
+                    return prevNotifications;
+                });
             }
 
             // Verifica las stanzas de IQ para obtener los contactos
@@ -58,7 +62,7 @@ export const XmppProvider = ({ xmppClient, children }) => {
             // Manejar mensajes
             if (stanza.is('message')) {
                 console.log('📩 Stanza de tipo mensaje recibida');
-                
+
                 if (!stanza.attrs.type || stanza.attrs.type === 'chat' || stanza.attrs.type === 'normal') {
                     const from = stanza.attrs.from;
                     const body = stanza.getChildText('body');
@@ -74,6 +78,8 @@ export const XmppProvider = ({ xmppClient, children }) => {
                         };
 
                         setMessages(prevMessages => [...prevMessages, message]);
+                        // Generar una alerta para un nuevo mensaje
+                        setAlerts(prevAlerts => [...prevAlerts, { user: from.split('@')[0], message: body }]);
 
                         console.log('🟢 Mensaje de chat recibido:', body);
                         console.log('De:', from);
@@ -108,7 +114,7 @@ export const XmppProvider = ({ xmppClient, children }) => {
     // Función para enviar mensajes
     const sendMessage = async (to, body) => {
         try {
-            
+
             const message = xml(
                 'message',
                 { type: 'chat', to: `${to}@alumchat.lol` },
@@ -119,14 +125,18 @@ export const XmppProvider = ({ xmppClient, children }) => {
             const username = localStorage.getItem('user');
 
             // Agrega el mensaje al estado local
-            setMessages(prevMessages => [...prevMessages, { host: username, contact: to, emisor:username, message: body }]);
+            setMessages(prevMessages => [...prevMessages, { host: username, contact: to, emisor: username, message: body }]);
         } catch (err) {
             console.error('❌ Error al enviar el mensaje:', err.toString());
         }
     };
 
+    const removeAlert = (index) => {
+        setAlerts(prevAlerts => prevAlerts.filter((_, i) => i !== index));
+    };
+
     return (
-        <XmppContext.Provider value={{ xmppClient, subscriptionRequests, contacts, messages, sendMessage }}>
+        <XmppContext.Provider value={{ xmppClient, subscriptionRequests, contacts, messages, sendMessage, alerts, removeAlert }}>
             {children}
         </XmppContext.Provider>
     );

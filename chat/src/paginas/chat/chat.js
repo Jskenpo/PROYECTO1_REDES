@@ -7,6 +7,7 @@ import { client, xml } from '@xmpp/client';
 import { XmppProvider } from '../context/XmppContext';  // Importa el contexto
 import Icon from '@mdi/react';
 import { mdiMessageText } from '@mdi/js';
+import AlertsContainer from '../../componentes/AlertsContainer/AlertsContainer';
 
 function Chat() {
     const [xmppClient, setXmppClient] = useState(null);
@@ -57,6 +58,9 @@ function Chat() {
                     </div>
 
                 </div>
+
+                <AlertsContainer />
+
 
             </div>
         </XmppProvider>
