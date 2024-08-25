@@ -35,6 +35,29 @@ This project is an XMPP client built from scratch using React, Material UI, Boot
    npm start
    ```
 
+
+## Dependencies
+
+The project uses the following main dependencies:
+
+```json
+"dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
+    "react-bootstrap": "^2.10.2",
+    "bootstrap": "^5.3.3",
+    "@mui/material": "^5.15.15",
+    "@mui/icons-material": "^5.15.15",
+    "mdb-react-ui-kit": "^8.0.0",
+    "@xmpp/client": "^0.13.1",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.2"
+  }
+```
+
+
 ## Technologies Used
 
 - **React:** For building the user interface.
@@ -88,16 +111,11 @@ function YourComponent() {
 
 After installing the dependencies and running the application, you'll be able to:
 
-- View your contact list and their availability.
+- View your contact list, their availability and their custom status.
 - Send and receive messages and files.
 - Manage contact requests and update your status.
 - Register, log in, and delete accounts as needed.
 - Receive notifications for new messages.
 
-## Contributing
-
-If you'd like to contribute to this project, feel free to fork the repository and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.
+## Contributors
+- **José Pablo Santisteban Vargas - 21153**
