@@ -8,6 +8,7 @@ import SettingsDialog from '../SettingsDialog/SettingsDialog';
 import { xml } from '@xmpp/client';
 import NewContact from '../NewContact/NewContact';
 import NotificationsDialog from '../NotificationsDialog/NotificationsDialog';
+import DeleteAccountDialog from '../DeleteAccountDialog/DeleteAccountDialog';
 import {useXmppContext} from '../../paginas/context/XmppContext';
 
 function Sidebar( ) {
@@ -15,6 +16,7 @@ function Sidebar( ) {
     const [openSettings, setOpenSettings] = useState(false);
     const [openContacts, setOpenContacts] = useState(false);
     const [openNotifications, setOpenNotifications] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -67,6 +69,15 @@ function Sidebar( ) {
         setOpenNotifications(false);
     }
 
+    const handleOpenDelete = () => {
+        setOpenDelete(true);
+    }
+
+    const handleCloseDelete = () => {
+        setOpenDelete(false);
+    }
+
+
     return (
         <div id="sidebar">
             <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleOpenContacts} >
@@ -78,7 +89,7 @@ function Sidebar( ) {
             <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleOpenSettings}>
                 <Icon path={mdiCog} size={1} color='#000000'/>
             </Button>
-            <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleLogout} >
+            <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleOpenDelete} >
                 <Icon path={mdiDelete} size={1} color='#000000'/>
             </Button>
             <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleLogout} >
@@ -93,6 +104,9 @@ function Sidebar( ) {
 
             {/* Renderiza el NotificationsDialog aquí */}
             <NotificationsDialog open={openNotifications} handleClose={handleCloseNotifications} xmppClient={xmppClient} />
+
+            {/* Renderiza el DeleteAccountDialog aquí */}
+            <DeleteAccountDialog open={openDelete} handleClose={handleCloseDelete} />
             
         </div>
     );
