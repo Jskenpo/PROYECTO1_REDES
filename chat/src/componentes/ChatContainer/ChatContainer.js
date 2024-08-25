@@ -10,9 +10,10 @@ import HostMessage from '../HostMessage/HostMessage';
 import { useXmppContext } from '../../paginas/context/XmppContext'; // Importa el contexto
 
 function ChatContainer({ userChat, handleCloseChat }) {
-    const { messages, sendMessage } = useXmppContext(); // Obtén mensajes y la función de envío del contexto
+    const { messages, sendMessage, sendFileMessage } = useXmppContext(); // Obtén mensajes y la función de envío del contexto
     const [inputMessage, setInputMessage] = useState('');
     const chatMessagesRef = useRef(null);
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         if (chatMessagesRef.current) {
@@ -24,6 +25,21 @@ function ChatContainer({ userChat, handleCloseChat }) {
         if (inputMessage.trim() !== '') {
             sendMessage(userChat, inputMessage); // Envía el mensaje al usuario
             setInputMessage(''); // Limpia el campo de entrada
+        }
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            // Aquí puedes manejar el archivo seleccionado, por ejemplo, enviarlo como un mensaje o procesarlo.
+            console.log('Archivo seleccionado:', file.name);
+            sendFileMessage(userChat, file); // Envía el archivo al usuario
+        }
+    };
+
+    const handlePaperclipClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click(); // Abre el explorador de archivos
         }
     };
 
@@ -50,7 +66,16 @@ function ChatContainer({ userChat, handleCloseChat }) {
             </div>
 
             <div id="chatInput">
-                <Button style={{ backgroundColor: "transparent", border: "none" }}>
+                <input
+                    type="file"
+                    style={{ display: 'none' }}
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                />
+                <Button
+                    style={{ backgroundColor: "transparent", border: "none" }}
+                    onClick={handlePaperclipClick}
+                >
                     <Icon path={mdiPaperclip} size={1} color='#000000' />
                 </Button>
 

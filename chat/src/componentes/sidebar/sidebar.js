@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '@mdi/react';
 import Button from 'react-bootstrap/esm/Button';
-import { mdiMessagePlusOutline, mdiCog, mdiBellBadgeOutline , mdiLogout } from '@mdi/js';
+import { mdiMessagePlusOutline, mdiCog, mdiBellBadgeOutline , mdiLogout, mdiDelete } from '@mdi/js';
 import { useNavigate } from 'react-router-dom';
 import './sidebar.css';
 import SettingsDialog from '../SettingsDialog/SettingsDialog';
@@ -77,6 +77,9 @@ function Sidebar( ) {
             </Button>
             <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleOpenSettings}>
                 <Icon path={mdiCog} size={1} color='#000000'/>
+            </Button>
+            <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleLogout} >
+                <Icon path={mdiDelete} size={1} color='#000000'/>
             </Button>
             <Button style={{ backgroundColor: "transparent", border: "none" }} onClick={handleLogout} >
                 <Icon path={mdiLogout} size={1} color='#000000'/>
